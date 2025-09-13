@@ -1,0 +1,148 @@
+<!-- <!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src https://api.openai.com; img-src 'self' data:;">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>AI Code Explainer</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <img src="icons/icon48.png" class="logo" alt="logo" />
+        <h1>AI Code Explainer</h1>
+      </header>
+
+      <section id="selected-section">
+        <h2>Selected code</h2>
+        <pre id="selectedText" class="selected">No selection yet. Use "Explain Code with AI" from the context menu on selected code.</pre>
+      </section>
+
+      <section id="api-section">
+        <label for="apiKey">OpenAI API Key</label>
+        <input id="apiKey" type="password" placeholder="sk-..." autocomplete="off" spellcheck="false" />
+        <div class="row">
+          <label for="model">Model</label>
+          <select id="model">
+            <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+            <option value="gpt-4o-mini">gpt-4o-mini</option>
+            <option value="gpt-4o">gpt-4o (if available)</option>
+          </select>
+        </div>
+        <small class="muted">Your key is saved locally (chrome.storage.local) only.</small>
+      </section>
+
+      <div class="controls">
+        <button id="explainBtn">Explain</button>
+        <button id="demoBtn">Open Demo Page</button>
+      </div>
+
+      <section id="result-section" class="hidden">
+        <h2>Summary</h2>
+        <div id="summary" class="card"></div>
+
+        <h3>Line-by-line</h3>
+        <div id="lineByLine" class="card code"></div>
+
+        <h3>Improvements / Pitfalls</h3>
+        <div id="improvements" class="card"></div>
+
+        <div class="footer-note">
+          <small class="muted">Tip: For best results, select a focused code block (10–60 lines).</small>
+        </div>
+      </section>
+
+      <footer>
+        <small class="muted">Made for demo • Do not embed API keys in public repos</small>
+      </footer>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html> -->
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src https://api.openai.com; img-src 'self' data:;">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>AI Code Explainer</title>
+    <link rel="stylesheet" href="popup.css" />
+
+    <!-- Highlight.js -->
+    <link rel="stylesheet" href="libs/github-dark.min.css">
+    <script src="libs/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <img src="icons/icon48.png" class="logo" alt="logo" />
+        <h1>AI Code Explainer</h1>
+      </header>
+
+      <!-- Selected Code -->
+      <section id="selected-section">
+  <h2>Selected code <small id="detectedLang" class="muted"></small></h2>
+  <div class="selected">
+    <div class="selected-wrapper">
+      <pre><code id="selectedText"></code></pre>
+    </div>
+  </div>
+  <small id="noSelectionHint" class="muted">Select code on a page, then right-click → "Explain Code with AI".</small>
+</section>
+
+      <!-- API Key + Model -->
+      <section id="api-section">
+        <label for="apiKey">OpenAI API Key</label>
+        <input id="apiKey" type="password" placeholder="sk-..." />
+
+        <div class="row">
+          <label for="model">Model</label>
+          <select id="model">
+            <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+            <option value="gpt-4o-mini">gpt-4o-mini</option>
+            <option value="gpt-4o">gpt-4o (if available)</option>
+          </select>
+        </div>
+
+        <label for="customPrompt">Custom Prompt (optional)</label>
+        <textarea id="customPrompt" placeholder="e.g. Explain like I'm 5, or Give detailed explanation..."></textarea>
+
+        <small class="muted">Your key is saved locally (chrome.storage.local) only.</small>
+      </section>
+
+      <!-- Controls -->
+      <div class="controls">
+        <button id="explainBtn">Explain</button>
+      </div>
+
+      <!-- Results -->
+      <section id="result-section" class="hidden">
+        <h2>Summary <button class="copyBtn" data-target="summary">📋 Copy</button></h2>
+        <div id="summary" class="card"></div>
+
+        <h3>Line-by-line <button class="copyBtn" data-target="lineByLine">📋 Copy</button></h3>
+        <div class="card">
+          <pre><code id="lineByLine"></code></pre>
+        </div>
+
+        <h3>Improvements / Pitfalls <button class="copyBtn" data-target="improvements">📋 Copy</button></h3>
+        <div id="improvements" class="card"></div>
+
+        <div class="footer-note">
+          <small class="muted">Tip: For best results, select a focused code block (10–60 lines).</small>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer>
+        <small class="muted">Made for demo • Do not embed API keys in public repos</small>
+      </footer>
+    </div>
+
+    <!-- Logic -->
+    <script src="popup.js"></script>
+  </body>
+</html>

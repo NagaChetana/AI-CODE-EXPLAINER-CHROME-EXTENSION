@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "AI Code Explainer",
+  "description": "Select code on any webpage → right-click → Explain Code with AI.",
+  "version": "1.0.0",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "scripting",
+    "activeTab",
+    "clipboardWrite"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "AI Code Explainer",
+    "default_popup": "popup.html"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup.css",
+        "icons/*",
+        "libs/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

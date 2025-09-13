@@ -1,0 +1,209 @@
+:root {
+  --bg: #0b1220;
+  --card: #0f1724;
+  --muted: #9aa4b2;
+  --accent: #4f93ff;
+  --text: #e6eef8;
+}
+* {
+  box-sizing: border-box;
+  font-family: Inter, system-ui, Arial, sans-serif;
+}
+/* Make scrollbars not eat into layout width on Windows overlay scrollbars */
+:root {
+  scrollbar-gutter: stable both-edges;
+}
+body {
+  margin: 0;
+  padding: 14px;
+  background: linear-gradient(180deg, #061021, #07122a);
+  color: var(--text);
+  /* Fill available window width; still keep a safety min-width below */
+  width: 100%;
+  max-width: 100vw;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+}
+h1 {
+  margin: 0;
+  font-size: 18px;
+}
+/* Make the container fluid */
+.container { width: 100%; max-width: 100%; }
+/* Ensure a reasonable minimum width so the popup doesn't collapse */
+html, body { min-width: 520px; }
+/* Ensure container uses full width */
+.container { width: 100%; max-width: 100%; }
+/* Make selected block and cards stretch fully */
+.selected, .card { width: 100%; }
+
+/* Selected code block - Responsive height to outer window */
+.selected {
+  background: #071827;
+  padding: 10px;
+  border-radius: 8px;
+  color: #dbeafe;
+  /* Make height adapt to the popup window: min 220px, prefer 55vh, cap at 650px */
+  max-height: clamp(220px, 55vh, 650px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  box-sizing: border-box;
+}
+.selected-wrapper { width: 100%; }
+.selected pre {
+  margin: 0;
+  display: block;
+  white-space: pre; /* This preserves line breaks and spaces */
+  word-wrap: normal; /* Prevents word wrapping */
+  overflow: visible; /* Prevents nested scrollbars */
+  width: 100%; /* Ensures full width */
+}
+.selected code {
+  display: block;
+  font-size: 13px;
+  white-space: pre; /* This preserves line breaks and spaces */
+  word-wrap: normal; /* Prevents word wrapping */
+  overflow: visible; /* Prevents nested scrollbars */
+  width: 100%; /* Ensures full width */
+  line-height: 1.5;
+}
+/* Custom scrollbar - Vertical only */
+.selected::-webkit-scrollbar {
+  width: 8px;
+  height: 0;
+}
+.selected::-webkit-scrollbar-thumb {
+  background: #2a3a55;
+  border-radius: 4px;
+}
+.selected::-webkit-scrollbar-thumb:hover {
+  background: #4f93ff;
+}
+.selected::-webkit-scrollbar-track {
+  background: transparent;
+}
+/* Input fields */
+label {
+  font-size: 12px;
+  color: var(--muted);
+  display: block;
+  margin-top: 6px;
+}
+input[type=password],
+select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #071122;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+textarea#customPrompt {
+  width: 100%;
+  min-height: 60px;
+  max-height: 160px;
+  resize: vertical;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #071122;
+  color: var(--text);
+  font-family: Inter, system-ui, sans-serif;
+  margin-bottom: 6px;
+}
+/* Layout helpers */
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.controls {
+  display: flex;
+  gap: 8px;
+}
+/* Buttons */
+button {
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 0;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+button:hover {
+  background: #367ae9;
+}
+button.secondary {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+/* AI output sections - Fixed formatting */
+.card {
+  background: var(--card);
+  padding: 10px;
+  border-radius: 8px;
+  color: var(--text);
+  min-height: 40px;
+  white-space: pre-wrap;
+  overflow: auto;
+}
+.card pre {
+  background: #071827;
+  padding: 8px;
+  border-radius: 6px;
+  margin: 6px 0;
+  overflow: auto;
+  max-height: 260px;
+  white-space: pre;
+  word-wrap: normal;
+}
+.card code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  white-space: pre;
+  word-wrap: normal;
+  line-height: 1.5;
+}
+/* Custom dark scrollbars */
+.card pre::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+.card pre::-webkit-scrollbar-thumb {
+  background: #2a3a55;
+  border-radius: 4px;
+}
+.card pre::-webkit-scrollbar-thumb:hover {
+  background: #4f93ff;
+}
+.card pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+/* Utility */
+.hidden {
+  display: none;
+}
+.muted {
+  color: var(--muted);
+  font-size: 12px;
+}
+.footer-note {
+  margin-top: 8px;
+}
