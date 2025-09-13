@@ -45,25 +45,24 @@ Since this extension is not published on the Chrome Web Store yet, it must be in
 - OpenAI API for explanations.
 
 5.Project Structure
-  AI-CODE-EXPLAINER-CHROME-EXTENSION/
-│
-├── manifest.json # Main configuration file for the Chrome extension
-├── background.js # Background script handling extension logic
-├── create_icon.html # HTML page for creating custom icons
-├── icon.png # Default icon
-├── popup.html # Popup UI
-├── popup.js # Logic for popup interactions
-├── popup.css # Styles for popup UI
-├── option.html # Options/settings page
-├── option.js # Logic for options page
-│
-├── icons/ # Extension icons
-│ ├── icon16.png
-│ ├── icon48.png
-│ ├── icon128.png
-│ └── sg.html # Extra test/demo file
-│
-├── libs/ # External libraries
-│ ├── highlight.min.js # Syntax highlighting library
-│ └── github-dark.min.css # Dark theme for syntax highlighting
 
+ AI-CODE-EXPLAINER-CHROME-EXTENSION/
+- **manifest.json** – Main configuration file for the Chrome extension  
+- **background.js** – Background script handling core logic  
+- **create_icon.html** – HTML page for testing/creating icons  
+- **icon.png** – Default extension icon  
+- **popup.html** – Popup UI  
+- **popup.js** – Logic for popup interactions  
+- **popup.css** – Styles for popup UI  
+- **option.html** – Options/settings page  
+- **option.js** – Logic for options page  
+
+- **/icons** – Folder for extension icons  
+  - icon16.png  
+  - icon48.png  
+  - icon128.png  
+  - sg.html (test/demo file)  
+
+- **/libs** – External libraries  
+  - highlight.min.js (syntax highlighting)  
+  - github-dark.min.css (dark theme for syntax highlighting)  
