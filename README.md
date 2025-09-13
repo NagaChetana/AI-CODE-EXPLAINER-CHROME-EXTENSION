@@ -1,68 +1,71 @@
-# AI-CODE-EXPLAINER-CHROME-EXTENSION
+# AI Code Explainer (Chrome/Edge Extension)
 
-AI Code Explainer is a Chrome extension that helps developers understand code snippets quickly and effectively.  
-Select any code on a webpage and get AI-powered explanations directly in your browser.
+Select any code on a web page, right‑click, and choose "Explain Code with AI". The popup shows the selected code with syntax highlighting and sends it (plus your prompt) to the OpenAI API for an explanation split into Summary, Line‑by‑line, and Improvements.
 
----
+This build detects the language locally using highlight.js (no API call) and only displays a selection when it was just captured via the context menu. If you open the popup without selecting code first, the Selected code area stays empty.
 
 ## Features
-- Explain any code snippet using AI
-- Different explanation modes (line-by-line, summary, improvements, pitfalls)
-- Syntax highlighting with dark theme
-- Customizable prompts to control the explanation style
-- Lightweight and easy to use
+- Context menu action: explain selected code on any page
+- Local language detection via highlight.js
+- Clean, dark UI with scrollable code and results
+- Your OpenAI API key is stored locally via `chrome.storage.local`
+- Recent change: selection is shown once then marked as "consumed"; the next popup opens empty until you select again
 
----
+## Folder structure
+```
+extension/
+├─ manifest.json
+├─ background.js          # Context menu, captures selection, opens popup
+├─ popup.html             # UI
+├─ popup.css              # Styling (responsive layout)
+├─ popup.js               # Logic, OpenAI call, highlighting, empty-state handling
+├─ option.html, option.js # Optional settings page (not wired as action popup)
+├─ libs/                  # highlight.js and theme
+├─ icons/                 # Extension icons
+└─ .gitattributes         # Line-ending/binary settings
+```
 
-## Installation
-Since this extension is not published on the Chrome Web Store yet, it must be installed manually.
+## Requirements
+- Chromium-based browser (Chrome, Edge, Brave, etc.)
+- OpenAI API key
 
-1.Clone this repository:
-   
-   bash
-   git clone https://github.com/NagaChetana/AI-CODE-EXPLAINER-CHROME-EXTENSION.git
-  
-2.Open Chrome and navigate to:
+## Install (Developer Mode)
+1. Download or clone this folder.
+2. In your browser, open `chrome://extensions` (or `edge://extensions`).
+3. Enable "Developer mode".
+4. Click "Load unpacked" and select the `extension` folder.
 
-  - chrome://extensions/
-  - Enable Developer Mode in the top right corner.
-  - Click Load unpacked and select the extension folder.
-  - The extension will be added to your Chrome toolbar.
+## Usage
+1. On any page, select a block of code (10–60 lines works best).
+2. Right‑click → "Explain Code with AI".
+3. The popup window opens. Paste your OpenAI API key the first time; it’s stored locally only.
+4. Optionally type a custom prompt, then press Explain.
 
-3.Usage
+Notes
+- If you open the popup from the toolbar without selecting code via the context menu first, the Selected code area remains empty by design.
+- The detected language is shown next to the "Selected code" heading.
 
-- Select any code snippet on a webpage.
-- Click the AI Code Explainer extension icon.
-- Enter your OpenAI API Key (first-time setup only).
-- Provide a prompt describing how you want the explanation (e.g., summary, detailed, step-by-step).
-- View the generated explanation with syntax highlighting.
+## Configuration
+- Models: choose from the dropdown in the popup.
+- Window size: adjust in `background.js` (the `chrome.windows.create` width/height).
+- Styling: tweak `popup.css`.
 
-4.Technologies Used
+## Permissions (from manifest.json)
+- `contextMenus`, `storage`, `scripting`, `activeTab`, `clipboardWrite`
 
-- HTML, CSS, JavaScript, JSON.
-- highlight.js for syntax highlighting.
-- GitHub Dark theme for styling.
-- OpenAI API for explanations.
+## How it works (high level)
+- `background.js` creates a context menu. When clicked, it grabs the current selection (prefers text from `pre/code/textarea`), normalizes newlines, saves it to `chrome.storage.local` with metadata `{ source: "contextMenu", ts }`, and opens `popup.html`.
+- `popup.js` loads the last selection only if `source === "contextMenu"`; it highlights and shows it once, then marks the metadata as `source: "consumed"` so the next popup starts empty.
+- When you click Explain, it calls the OpenAI Chat Completions API with your code and prompt, then renders the three sections.
 
-5.Project Structure
+## Troubleshooting
+- Popup shows old selection repeatedly: reload the extension from `chrome://extensions`. The current build consumes the selection after first display; if needed, clear site data for the extension or remove `selectedCodeText` and `selectedCodeMeta` via the extension’s background page console.
+- Very narrow popup: we set fluid widths in `popup.css`. If you use the toolbar bubble instead of the separate window, the browser may constrain width; you can open from the context menu which uses a separate popup window sized in `background.js`.
+- Network/API errors: ensure your key is valid and you have access to the selected model.
 
- AI-CODE-EXPLAINER-CHROME-EXTENSION/
-- **manifest.json** – Main configuration file for the Chrome extension  
-- **background.js** – Background script handling core logic  
-- **create_icon.html** – HTML page for testing/creating icons  
-- **icon.png** – Default extension icon  
-- **popup.html** – Popup UI  
-- **popup.js** – Logic for popup interactions  
-- **popup.css** – Styles for popup UI  
-- **option.html** – Options/settings page  
-- **option.js** – Logic for options page  
+## Security & privacy
+- Your API key is stored locally (browser `chrome.storage.local`) and only used to call OpenAI.
+- No analytics or remote logging are included.
 
-- **/icons** – Folder for extension icons  
-  - icon16.png  
-  - icon48.png  
-  - icon128.png  
-  - sg.html (test/demo file)  
-
-- **/libs** – External libraries  
-  - highlight.min.js (syntax highlighting)  
-  - github-dark.min.css (dark theme for syntax highlighting)  
+## License
+This repository has no explicit license yet. Add one (e.g., MIT) if you plan to share publicly.
